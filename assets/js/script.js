@@ -90,8 +90,8 @@ const hiScoreHandler = function(event) {
         const retryButtonEl = document.createElement("button"); 
         const clearHiScoreButtonEl = document.createElement("button");
 
-        retryButtonEl.textContent = "Retry";
-        retryButtonEl.id = "retry-btn"; 
+        retryButtonEl.textContent = "Return";
+        retryButtonEl.id = "return-btn"; 
         clearHiScoreButtonEl.textContent = "Clear hiscores";
 
         contentTextEl.appendChild(retryButtonEl);
@@ -104,8 +104,8 @@ const hiScoreHandler = function(event) {
     // Refresh button
 }
 // Create a function that will refresh the page if the Retry button is clicked on the hiscores screen 
-const resetHandler = function (event) {
-    if (event.target.matches("#retry-btn")) {
+const returnHandler = function (event) {
+    if (event.target.matches("#return-btn")) {
         window.location.reload(); 
     }
 }
@@ -117,4 +117,4 @@ answerListEl.addEventListener("click", nextQuestionHandler);
 // After the user submits their initials, generate hiscore screen 
 contentTextEl.addEventListener("click", hiScoreHandler);
 // Look for retry button click
-contentTextEl.addEventListener("click",resetHandler);
+contentTextEl.addEventListener("click",returnHandler);
