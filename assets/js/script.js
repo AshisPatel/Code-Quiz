@@ -9,16 +9,15 @@ const answerListEl = document.querySelector("#answer-list");
 let quesNum = 0; 
 // Initialize object containing questions
 const questions = [{title: "Question 1: THIS IS A TEST", answers: ["a","b","c","d"]
-}, {title: "Question 2: THIS IS A PASTA", answers: ["e", "f", "g", "h"]}]; 
+}, {title: "Question 2: THIS IS A PASTA", answers: ["e", "f", "g", "h"]}, 
+{title: "Question 3", answers: ["i","j","k","l"]},
+{title: "Question 4", answers: ["m", "n", "o", "p"]}]; 
 
-// Create function that will transition from the 'Welcome Page' over to the quiz
-
-const startQuizHandler = function(event) {
-    // Hide welcome screen interface once questions
+// Create a function to generate the questions 
+function generateQuestion() {
+    // Set h1 equal to the questions title 
     h1El.textContent = questions[quesNum].title;
-    welcomeTextEl.remove();
-    startButtonEl.remove(); 
-    // For each item in answers key, add a button and then append the button to a list item that is appended in the ordered list under the question
+    // Iterate through the questions object and add answers 
     for(let i = 0; i < questions[quesNum].answers.length; i++) {
         const answerEl = document.createElement("button"); 
         const answerHolderEl = document.createElement("li");
@@ -30,17 +29,27 @@ const startQuizHandler = function(event) {
         answerListEl.appendChild(answerHolderEl);
         //console.log(answerListEl); why does ths console log show me the same list each iteration? 
     }
+    // Increment quesNum to move on to next question next time function is called 
     quesNum++; 
 }
 
-const nextQuestionHandler = function(event) {
-    if (event.target.matches(".answer") && quesNum < questions.length) {
-        for(let i = 0; i < questions[quesNum].answers.lengthl; i++) {
-            h1El.textContent = questions[quesNum].title;
-            quesNum++; 
-        }
-    }
+// Create function that will transition from the 'Welcome Page' over to the quiz
+const startQuizHandler = function(event) {
+    // Hide welcome screen interface once questions
+    welcomeTextEl.remove();
+    startButtonEl.remove(); 
+    // For each item in answers key, add a button and then append the button to a list item that is appended in the ordered list under the question
+    generateQuestion(); 
+}
 
+// Create function that will transition to the next question once the quiz has begun 
+const nextQuestionHandler = function(event) {
+    // If the element that is clicked in the list is a button representing an answer, and it is not the last question of the quiz, generate the next question 
+    if (event.target.matches(".answer") && quesNum != questions.length) {
+        // Removes old answers 
+        answerListEl.textContent = ""; 
+        generateQuestion(); 
+    }
 }
 
 // Change welcome interface to the first question of the quiz when the start button is clicked
