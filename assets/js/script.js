@@ -8,14 +8,15 @@ const answerListEl = document.querySelector("#answer-list");
 const endFormEl = document.querySelector("#end-form"); 
 // Initialize question count 
 let quesNum = 0; 
+let score = 0; 
 // Initialize object containing questions
 const questions = [{title: "Question 1", answers: ["a","b","c","d"]
-}, {title: "Question 2", answers: ["e", "f", "g", "h"]}, 
-{title: "Question 3", answers: ["i","j","k","l"]},
-{title: "Question 4", answers: ["m", "n", "o", "p"]}]; 
+, correctAnswer: "a"}, {title: "Question 2", answers: ["e", "f", "g", "h"], correctAnswer: "f"}, 
+{title: "Question 3", answers: ["i","j","k","l"], correctAnswer: "l"},
+{title: "Question 4", answers: ["m", "n", "o", "p"], correctAnswer: "o"}]; 
 
 // Create a function to generate the questions 
-function generateQuestion() {
+const generateQuestion = function () {
     // Set h1 equal to the questions title 
     h1El.textContent = questions[quesNum].title;
     // Iterate through the questions object and add answers 
@@ -33,9 +34,19 @@ function generateQuestion() {
     quesNum++; 
 }
 
+// Create a function that will increase the score for correct answers and the timer
+
+const checkAnswer = function() {
+    // What does the dashed line mean? 
+    if (event.target.textContent === questions[quesNum-1].correctAnswer) {
+        score = score + 10; 
+        console.log(score); 
+    }
+}
+
 // Create function that will transition from the 'Welcome Page' over to the quiz
 const startQuizHandler = function(event) {
-    questNum = 0; 
+    questNum = 0;
     // Hide welcome screen interface once questions
     contentTextEl.textContent = ""; 
     startButtonEl.remove(); 
@@ -49,14 +60,21 @@ const nextQuestionHandler = function(event) {
 
     console.log(event.target); 
     if (event.target.matches(".answer") && quesNum != questions.length) {
+        // Check to see if right answer was selected and score needs to be increased 
+        checkAnswer(); 
         // Removes old answers 
         answerListEl.textContent = ""; 
         generateQuestion(); 
     }
     // If the answer is clicked and it is the lat question, transition to the score submit
     else if (event.target.matches(".answer") && quesNum === questions.length) {
-        // Set up pre-form text
-        //event.preventDefault(); 
+        
+        //event.preventDefault();
+        
+        // Check to see if right answer was selected and score needs to be increased 
+        checkAnswer(); 
+        
+        // We need to prevent the default function of the enter key here
         console.log(document); 
         answerListEl.remove(); 
         h1El.textContent ="QUIZ COMPLETE"; 
@@ -64,6 +82,7 @@ const nextQuestionHandler = function(event) {
 
         let initialInputEl= document.createElement("input"); 
         let submitButtonEl = document.createElement("button"); 
+        let finalScoreEl = document.createElement("div"); 
 
         initialInputEl.setAttribute("type", "text"); 
         initialInputEl.setAttribute("name", "initials");
@@ -73,11 +92,14 @@ const nextQuestionHandler = function(event) {
         submitButtonEl.id = "submit-initials-btn";
         submitButtonEl.textContent = "Submit"; 
 
-        contentTextEl.appendChild(initialInputEl);
-        contentTextEl.appendChild(submitButtonEl); 
+        finalScoreEl.textContent = "Your final score was: " + score; 
 
-        // endFormEl.appendChild(initialInputEl); 
-        // endFormEl.appendChild(submitButtonEl); 
+        // contentTextEl.appendChild(initialInputEl);
+        // contentTextEl.appendChild(submitButtonEl); 
+        // contentTextEl.appendChild(finalScoreEl); 
+
+        endFormEl.appendChild(initialInputEl); 
+        endFormEl.appendChild(submitButtonEl); 
     }
 }
 
