@@ -12,7 +12,7 @@
         <!--Link to the final screen or scoreboard-->
         <h2><a href="">View Scoreboard</a></h2>
         <!--Timer will go in here as well-->
-        <div class = "timer-box">Time Left: 75</div>
+        <div class = "timer-box">Time Left: 60</div>
     </header>
 
     <!--Main Content section will host the welcome screen, quiz, and scoreboard-->
@@ -24,7 +24,7 @@
 
                     Well are you ready? If so, click the 'start' button below or press 'enter' on your keyboard!
                 </p>
-            <button id="start-quiz">Start</button>
+            <button id="start-btn">Start</button>
         </section>
 
         <section id = "question-panel" class = "hide">
@@ -35,7 +35,9 @@
         <section id = "score-submit-panel" class = "hide">
             <div class = "completion-text"> 
                 <h1>Quiz Complete!</h1>
-                <p>Congratulations, you're done!</p>
+                <div class = "score-wrapper">
+                    <p>Congratulations, you're done!</p> <span id = "final-score">Temp</span>
+                </div>
             </div>
             <form id = "end-form">
                 <input type = "text" name = "initials" placeholder = "Please enter your initials">
@@ -46,21 +48,9 @@
         <section id = "highscore-panel" class = "hide">
             <h1>Hiscores:</h1>
             <ol id = "highscore-list"></ol>
+            <button id = "return-btn">Return</button>
+            <button id = "clear-btn">Clear highscores</button>
         </section>
-
-        <!-- <div class = "question-wrapper">
-            <h1 id = "welcome-title">Code Quiz</h1>
-            <div class="list-wrap">
-                <p id = "content-text">
-                This quiz will involve a series of questions on the topic of the Web API. You will only be able to click once to select an answer to each question, so be careful! The more questions you get right, the higher your score. But don't dally, because the more time you have remaining when you're done with the quiz is added to your score! <br /><br />
-
-                Well are you ready? If so, click the 'start' button below or press 'enter' on your keyboard!
-                </p>
-                <ol id = "answer-list"></ol>
-            </div>
-            <button id="start-quiz">Start</button>
-        </div>
-        <form id = "end-form"></form> -->
     </main>
 
     <script src="./assets/js/script.js"></script>

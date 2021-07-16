@@ -1,12 +1,19 @@
-// Initailize variable for submit button to start quiz 
-const startButtonEl = document.querySelector("#start-quiz");
-// Grab h1 as question-line
-const h1El = document.querySelector("#welcome-title");
-// Grab div.list-wrap as the holder for the answers
-const contentTextEl = document.querySelector("#content-text");
+// Initialize each section as a DOM-element to be able to manipulate visibility
+const welcomePanelEl = document.getElementById("welcome-panel");
+const questionPanelEl = document.getElementById("question-panel");
+const scoreSubmitPanelEl = document.getElementById("score-submit-panel");
+const highscorePanelEl = document.getElementById("highscore-panel");
+// Initailize buttons
+const startButtonEl = document.querySelector("#start-btn"); 
+const returnButtonEl = document.querySelector("#return-btn"); 
+const clearButtonEl = document.querySelector("#clear-btn"); 
+// Grab question-title and answer-list elements to populate with quiz questions & answers
+const questionTitleEl = document.querySelector("#question-title");
 const answerListEl = document.querySelector("#answer-list");
-const endFormEl = document.querySelector("#end-form");
+// Grab div.list-wrap as the holder for the answers
 const timerEl = document.querySelector(".timer-box");
+// Grab span where final score is located
+
 // Initialize boolean to check if the timer needs to continue counting down 
 let timerContinue = true;
 // Initialize total time user has to take the quiz; 
@@ -25,8 +32,8 @@ const questions = [{
 
 // Create a function to generate the questions 
 const generateQuestion = function () {
-    // Set h1 equal to the questions title 
-    h1El.textContent = questions[quesNum].title;
+    // Set question-title 
+    questionTitleEl.textContent = questions[quesNum].title;
     // Iterate through the questions object and add answers 
     for (let i = 0; i < questions[quesNum].answers.length; i++) {
         const answerEl = document.createElement("button");
@@ -84,13 +91,14 @@ const countDown = function () {
 }
 
 // Create function that will transition from the 'Welcome Page' over to the quiz
-const startQuizHandler = function (event) {
-    questNum = 0;
-    // Hide welcome screen interface once questions
-    contentTextEl.textContent = "";
-    startButtonEl.remove();
-    // For each item in answers key, add a button and then append the button to a list item that is appended in the ordered list under the question
+const startQuizHandler = function () {
+    // Hide the welcome panel 
+    welcomePanelEl.className = "hide";
+    questNum = 0;    
+    // Start timer 
     countDown();
+    // Reveal question panel
+    questionPanelEl.className = ""; 
     generateQuestion();
 }
 
@@ -109,80 +117,46 @@ const nextQuestionHandler = function (event) {
     // If the answer is clicked and it is the lat question, transition to the score submit
     else if (event.target.matches(".answer") && quesNum === questions.length) {
 
-        //event.preventDefault();
-        // Quiz is completed, timer no longer needs to countdown 
+        // Check to see if right answer was selected and score needs to be increased 
+         checkAnswer();
+        // Stop timer and add remaining time to score 
         timerContinue = false;
         score = totalTime + score; 
-        // Check to see if right answer was selected and score needs to be increased 
-        checkAnswer();
-
-        // We need to prevent the default function of the enter key here
-        answerListEl.remove();
-        h1El.textContent = "QUIZ COMPLETE";
-        contentTextEl.textContent = "Congratulations, you're done!";
-
-        let initialInputEl = document.createElement("input");
-        let submitButtonEl = document.createElement("button");
-        let finalScoreEl = document.createElement("div");
-
-        initialInputEl.setAttribute("type", "text");
-        initialInputEl.setAttribute("name", "initials");
-        initialInputEl.setAttribute("placeholder", "Please enter your initials");
-
-        submitButtonEl.setAttribute("type", "submit");
-        submitButtonEl.id = "submit-initials-btn";
-        submitButtonEl.textContent = "Submit";
-
-        finalScoreEl.textContent = "Your final score was: " + score;
-        
+        // Hide the question panel and reveal score submit panel 
+        questionPanelEl.className = "hide";
+        scoreSubmitPanelEl.className = ""; 
+   
+        const finalScoreEl = document.querySelector("#final-score"); // ...getElementbyId doesn't work with span?
+        finalScoreEl.textContent = `Your final score was: ${score}`
         // Add user's initials and score to an object to store in the localStorage
-
-        endFormEl.appendChild(initialInputEl);
-        endFormEl.appendChild(submitButtonEl);
-        endFormEl.appendChild(finalScoreEl);
     }
 }
 
-// Create a function that will transition to the hiScore screen 
+// Create a function that will transition to the highscore screen 
 const highScoreHandler = function (event) {
-
+    // Prevent refresh on submit
     event.preventDefault();
-    console.log(initialInputEl.value);
-    h1El.textContent = "Highscores:"
-    contentTextEl.textContent = "";
-    //endFormEl.remove();
-    console.log(document);
-
-    const retryButtonEl = document.createElement("button");
-    const clearHiScoreButtonEl = document.createElement("button");
-
-    retryButtonEl.textContent = "Return";
-    retryButtonEl.id = "return-btn";
-    clearHiScoreButtonEl.textContent = "Clear hiscores";
-
-    contentTextEl.appendChild(retryButtonEl);
-    contentTextEl.appendChild(clearHiScoreButtonEl);
-
+    // Hide score submit panel and reveal highscore panel
+    scoreSubmitPanelEl.className = "hide"; 
+    highscorePanelEl.className = ""; 
     // Display hiscore list from localStorage
 
     // Display two buttons to allow the user to refresh the page or clear the hiscores
 
     // Refresh button
 }
-// Create a function that will refresh the page if the Retry button is clicked on the hiscores screen 
-const returnHandler = function (event) {
-    if (event.target.matches("#return-btn")) {
-        window.location.reload();
-    }
-}
 
-// Change welcome interface to the first question of the quiz when the start button is clicked
+// Start quiz on button click 
 startButtonEl.addEventListener("click", startQuizHandler);
 // Once an answer is clicked, dynamically generate the next question 
 answerListEl.addEventListener("click", nextQuestionHandler);
 // After the user submits their initials, generate hiscore screen 
+scoreSubmitPanelEl.addEventListener("submit", highScoreHandler); 
 // Look for retry button click
-contentTextEl.addEventListener("click", returnHandler);
-// Disable the enter button default functionality
-endFormEl.addEventListener("submit", highScoreHandler); 
-
+returnButtonEl.addEventListener("click", function () {
+    window.location.reload(); 
+});
+// Look for clear highscore button click
+clearButtonEl.addEventListener("click", function () {
+    localStorage.clear(); 
+});
