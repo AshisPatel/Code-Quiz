@@ -1,0 +1,19 @@
+#question-panel {
+    color: blue; 
+}
+
+#welcome-panel {
+    color: green; 
+}
+
+#score-submit-panel {
+    color: red; 
+}
+
+#highscore-panel {
+    color: purple; 
+}
+
+.hide {
+    display: none; 
+}
