@@ -135,10 +135,7 @@ const nextQuestionHandler = function (event) {
 
         finalScoreEl.textContent = "Your final score was: " + score;
         
-        // Check to see if user submitted their initials and then save score in storage
-        // contentTextEl.appendChild(initialInputEl);
-        // contentTextEl.appendChild(submitButtonEl); 
-        // contentTextEl.appendChild(finalScoreEl); 
+        // Add user's initials and score to an object to store in the localStorage
 
         endFormEl.appendChild(initialInputEl);
         endFormEl.appendChild(submitButtonEl);
@@ -150,10 +147,10 @@ const nextQuestionHandler = function (event) {
 const highScoreHandler = function (event) {
 
     event.preventDefault();
-
+    console.log(initialInputEl.value);
     h1El.textContent = "Highscores:"
     contentTextEl.textContent = "";
-    endFormEl.remove();
+    //endFormEl.remove();
     console.log(document);
 
     const retryButtonEl = document.createElement("button");
