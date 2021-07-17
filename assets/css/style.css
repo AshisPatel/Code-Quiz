@@ -55,17 +55,20 @@ header {
     margin-top: 0.5rem; 
     outline: none; 
     transition: border 150ms ease-in;
+    transition: background-color 150ms ease-in; 
 }
 
 /* Style for button & input interaction */
 .btn:hover, .input:hover {
     border-color:#f5f;
     box-shadow:1px 1px 1px #f5f; 
+    background-color: rgba(255,85,255,.3); 
 }
 
 .btn:focus, .input:focus {
     border-color:#f5f;
     box-shadow:1px 1px 1px #f5f; 
+    background-color: rgba(255,85,255,.3); 
 }
 
 
@@ -76,15 +79,27 @@ header {
 
 /* Multi-use styles for buttons and section panels end */
 
-
-
-
 /* Style specific elements via id tags*/
 #scoreboard {
-    font-size: 20px; 
-
+    font-size: 20px;
+    border: 2px solid var(--black); 
+    border-radius: 0.4rem; 
+    padding: 0.5rem; 
+    transition: border 150ms ease-in; 
+    transition: background-color 150ms ease-in; 
 }
-/* Place hiscore title in the same spot as other panels, even when the header is hidden */
+
+#scoreboard:focus, #scoreboard:hover {
+    background-color: rgba(255,85,255,.3); 
+    border-color: var(--ultraviolet);
+}
+
+/* Style for welcome panel */
+#welcome-panel {
+    width: 37%; 
+}
+
+/* Place highscore title in the same spot as other panels, even when the header is hidden */
 #highscore-panel.panel {
     margin-top: 174px; 
 }
@@ -150,8 +165,19 @@ header {
 #highscore-list li:hover {
     border: 2px dotted var(--white); 
 }
-/* Style by id tags end*/
 
+/* Answer feed back form style */
+#feedback {
+    display: flex; 
+    justify-content: center;
+    color: var(--ultraviolet); 
+    margin-top: 2rem;
+    font-size: 20px;  
+}
+
+/* Class to fadce out answer feed back after half a second */
+
+/* Style by id tags end*/
 
 /* Hide class to hide panels that should not be active for certain quiz-phases */
 .hide {

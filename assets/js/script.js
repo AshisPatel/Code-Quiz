@@ -30,8 +30,8 @@ let score = 0;
 let highscores = []; 
 // Initialize object containing questions
 const questions = [{
-    title: "Question 1: This is a longer question to test the text style edits!", answers: ["Does this look fine?", "Or is it actually really bad...", "Do I stop being lazy and fix the justify?", "Meh"]
-    , correctAnswer: "a"
+    title: "I made this blank :(", answers: ["Does this look fine?", "Or is it actually really bad...", "Do I stop being lazy and fix the justify?", "Meh"]
+    , correctAnswer: "Does this look fine?"
 }, { title: "Question 2", answers: ["e", "f", "g", "h"], correctAnswer: "f" },
 { title: "Question 3", answers: ["i", "j", "k", "l"], correctAnswer: "l" },
 { title: "Question 4", answers: ["m", "n", "o", "p"], correctAnswer: "o" }];
@@ -40,16 +40,16 @@ const questions = [{
 const generateQuestion = function () {
     // Set question-title 
     questionTitleEl.textContent = questions[quesNum].title;
-    // Iterate through the questions object and add answers 
-    for (let i = 0; i < questions[quesNum].answers.length; i++) {
+    let questionAnswers = questions[quesNum].answers;
+    questionAnswers.forEach(questionAnswer => {
         const answerEl = document.createElement("button");
         const answerHolderEl = document.createElement("li");
         
         answerEl.className = "btn";
-        answerEl.textContent = questions[quesNum].answers[i];
+        answerEl.textContent = questionAnswer;
         answerHolderEl.appendChild(answerEl);
         answerListEl.appendChild(answerHolderEl);
-    }
+    });
     // Increment quesNum to move on to next question next time function is called 
     quesNum++;
 }
@@ -58,16 +58,24 @@ const generateQuestion = function () {
 
 const checkAnswer = function () {
     // If the user gets the question correct, add 10 points
+    const answerFeedBackEl = document.querySelector("#feedback"); 
     if (event.target.textContent === questions[quesNum - 1].correctAnswer) {
         score = score + 10;
+        answerFeedBackEl.textContent = "Correct! (^u^)b";
     }
     // If the user gets the question wrong, remove 10 seconds from the timer
     else if (totalTime > 10) {
-        totalTime = totalTime - 10; 
+        totalTime = totalTime - 10;  
+        answerFeedBackEl.textContent = "Wrong! (`n`)";
     }
     else {
         totalTime = 0; 
     }
+
+    const removeFeedbackText = setTimeout(function(){ 
+        answerFeedBackEl.textContent = "";
+    }, 1000);
+     
 }
 
 // Create function that when called will start countdown timer -> include in start quiz handler
@@ -176,12 +184,14 @@ const loadHighscores = function() {
         return b.highscore - a.highscore; 
     });
     // Creates list of highscores from the stored object 
-    for (let i = 0; i < savedHighscores.length; i++) {
+    savedHighscores.forEach(highscore => {
         const highscoreListItemEl = document.createElement("li");
-        highscoreListItemEl.textContent = `${savedHighscores[i].initials} - ${savedHighscores[i].highscore}`; 
+        highscoreListItemEl.textContent = `${highscore.initials} - ${highscore.highscore}`; 
         highscoreListEl.appendChild(highscoreListItemEl); 
-    }
+    })
 }
+
+//
 
 // Create a function to hide other content, and stop quiz if scoreboard is clicked
 const scoreboardHandler = function () {
