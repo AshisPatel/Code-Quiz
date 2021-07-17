@@ -3,10 +3,12 @@ const welcomePanelEl = document.getElementById("welcome-panel");
 const questionPanelEl = document.getElementById("question-panel");
 const scoreSubmitPanelEl = document.getElementById("score-submit-panel");
 const highscorePanelEl = document.getElementById("highscore-panel");
+const headerEl = document.querySelector("header");
 // Initailize buttons
 const startButtonEl = document.querySelector("#start-btn"); 
 const returnButtonEl = document.querySelector("#return-btn"); 
-const clearButtonEl = document.querySelector("#clear-btn"); 
+const clearButtonEl = document.querySelector("#clear-btn");
+const scoreboardEl = document.querySelector("#scoreboard");  
 // Grab question-title and answer-list elements to populate with quiz questions & answers
 const questionTitleEl = document.querySelector("#question-title");
 const answerListEl = document.querySelector("#answer-list");
@@ -19,7 +21,7 @@ const timerEl = document.querySelector(".timer-box");
 // Initialize boolean to check if the timer needs to continue counting down 
 let timerContinue = true;
 // Initialize total time user has to take the quiz; 
-let totalTime = 20;
+let totalTime = 60;
 // Initialize question count 
 let quesNum = 0;
 // Initialize score counter
@@ -85,7 +87,6 @@ const countDown = function () {
         else {
             timerEl.textContent = "Time Left: 0";
             totalTime = 0;
-            timeLeft = false;
             questionPanelEl.className = "hide";
             scoreSubmitPanelEl.className = ""; 
             clearInterval(timer);
@@ -152,7 +153,8 @@ const highScoreHandler = function (event) {
         localStorage.setItem("highscores", JSON.stringify(highscores)); 
         // Panel transition
         loadHighscores(); 
-        scoreSubmitPanelEl.className = "hide"; 
+        scoreSubmitPanelEl.className = "hide";
+        headerEl.className = "hide"; 
         highscorePanelEl.className = "";
     }
 }
@@ -179,7 +181,19 @@ const loadHighscores = function() {
         highscoreListItemEl.textContent = `${savedHighscores[i].initials} - ${savedHighscores[i].highscore}`; 
         highscoreListEl.appendChild(highscoreListItemEl); 
     }
+}
 
+// Create a function to hide other content, and stop quiz if scoreboard is clicked
+const scoreboardHandler = function () {
+    // End timer if the the button was clicked mid quiz
+    timerContinue = false; 
+    // Hide both welcome panel and question panel and reveal highscore panel
+    welcomePanelEl.className = "hide";
+    questionPanelEl.className = "hide";
+    headerEl.className = "hide"; 
+    highscorePanelEl.className = ""; 
+    // Call loadHighscores function 
+    loadHighscores(); 
 
 }
 
@@ -198,6 +212,8 @@ clearButtonEl.addEventListener("click", function () {
     highscoreListEl.textContent = "";  
     localStorage.clear();
 });
+
+scoreboardEl.addEventListener("click", scoreboardHandler)
 
 // Call load highscores 
 loadHighscores();
