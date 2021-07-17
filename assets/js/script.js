@@ -19,7 +19,7 @@ const timerEl = document.querySelector(".timer-box");
 // Initialize boolean to check if the timer needs to continue counting down 
 let timerContinue = true;
 // Initialize total time user has to take the quiz; 
-let totalTime = 60;
+let totalTime = 20;
 // Initialize question count 
 let quesNum = 0;
 // Initialize score counter
@@ -86,7 +86,8 @@ const countDown = function () {
             timerEl.textContent = "Time Left: 0";
             totalTime = 0;
             timeLeft = false;
-            hiScoreHandler(); // doesn't work
+            questionPanelEl.className = "hide";
+            scoreSubmitPanelEl.className = ""; 
             clearInterval(timer);
         }
     }, 1000);
@@ -153,14 +154,7 @@ const highScoreHandler = function (event) {
         loadHighscores(); 
         scoreSubmitPanelEl.className = "hide"; 
         highscorePanelEl.className = "";
-
     }
-    
-    // Display hiscore list from localStorage
-
-    // Display two buttons to allow the user to refresh the page or clear the hiscores
-
-    // Refresh button
 }
 
 // Create a function to load previously saved highscores
