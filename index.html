@@ -12,44 +12,46 @@
         <!--Link to the final screen or scoreboard-->
         <h2 id = "scoreboard">View Scoreboard</h2>
         <!--Timer will go in here as well-->
-        <div class = "timer-box">Time Left: 60</div>
+        <div id = "timer-box">Time Left: 60</div>
     </header>
 
     <!--Main Content section will host the welcome screen, quiz, and scoreboard-->
     <main class = "page-content">
-        <section id = "welcome-panel" class = "">
+        <section id = "welcome-panel" class = "panel">
             <h1>Code Quiz</h1>
                 <p>
                     This quiz will involve a series of questions on the topic of the Web API. You will only be able to click once to select an answer to each question, so be careful! The more questions you get right, the higher your score. But don't dally, because the more time you have remaining when you're done with the quiz is added to your score! <br /><br />
 
                     Well are you ready? If so, click the 'start' button below or press 'enter' on your keyboard!
                 </p>
-            <button id="start-btn">Start</button>
+            <button id="start-btn" class = "btn">Start</button>
         </section>
 
-        <section id = "question-panel" class = "hide">
-            <h1 id = "question-title">Temp</h1>
+        <section id = "question-panel" class = "panel">
+            <h1 id = "question-title"></h1>
             <ol id = "answer-list"></ol>
         </section>
 
         <section id = "score-submit-panel" class = "hide">
             <div class = "completion-text"> 
-                <h1>Quiz Complete!</h1>
+                <h1>The Quiz is Over!</h1>
                 <div class = "score-wrapper">
-                    <p>Congratulations, you're done!</p> <span id = "final-score">Temp</span>
+                    <p>Please enter your initials below to save your score to the scoreboard!</p> <span id = "final-score"></span>
                 </div>
             </div>
             <form id = "end-form">
-                <input type = "text" name = "initials" placeholder = "Please enter your initials">
-                <button type = "submit" id="submit-initials-btn">Submit</button>
+                <input type = "text" name = "initials" placeholder = "Please enter your initials" class = "input" >
+                <button type = "submit" id="submit-initials-btn" class = "btn">Submit</button>
             </form>
         </section>
 
         <section id = "highscore-panel" class = "hide">
             <h1>Hiscores:</h1>
             <ol id = "highscore-list"></ol>
-            <button id = "return-btn">Return</button>
-            <button id = "clear-btn">Clear highscores</button>
+            <div class = "btn-wrapper">
+                <button id = "return-btn" class = "btn">Return</button>
+                <button id = "clear-btn" class = "btn">Clear Scores</button>
+            </div>
         </section>
     </main>
 

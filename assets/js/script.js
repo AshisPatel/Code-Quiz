@@ -13,9 +13,9 @@ const scoreboardEl = document.querySelector("#scoreboard");
 const questionTitleEl = document.querySelector("#question-title");
 const answerListEl = document.querySelector("#answer-list");
 // Grab highscore list to populate with highscores
-let highscoreListEl = document.querySelector("#highscore-list");
+const highscoreListEl = document.querySelector("#highscore-list");
 // Grab div.list-wrap as the holder for the answers
-const timerEl = document.querySelector(".timer-box");
+const timerEl = document.querySelector("#timer-box");
 // Grab span where final score is located
 
 // Initialize boolean to check if the timer needs to continue counting down 
@@ -30,7 +30,7 @@ let score = 0;
 let highscores = []; 
 // Initialize object containing questions
 const questions = [{
-    title: "Question 1", answers: ["a", "b", "c", "d"]
+    title: "Question 1: This is a longer question to test the text style edits!", answers: ["Does this look fine?", "Or is it actually really bad...", "Do I stop being lazy and fix the justify?", "Meh"]
     , correctAnswer: "a"
 }, { title: "Question 2", answers: ["e", "f", "g", "h"], correctAnswer: "f" },
 { title: "Question 3", answers: ["i", "j", "k", "l"], correctAnswer: "l" },
@@ -44,8 +44,8 @@ const generateQuestion = function () {
     for (let i = 0; i < questions[quesNum].answers.length; i++) {
         const answerEl = document.createElement("button");
         const answerHolderEl = document.createElement("li");
-
-        answerEl.className = "answer";
+        
+        answerEl.className = "btn";
         answerEl.textContent = questions[quesNum].answers[i];
         answerHolderEl.appendChild(answerEl);
         answerListEl.appendChild(answerHolderEl);
@@ -88,7 +88,7 @@ const countDown = function () {
             timerEl.textContent = "Time Left: 0";
             totalTime = 0;
             questionPanelEl.className = "hide";
-            scoreSubmitPanelEl.className = ""; 
+            scoreSubmitPanelEl.className = "panel"; 
             clearInterval(timer);
         }
     }, 1000);
@@ -102,14 +102,14 @@ const startQuizHandler = function () {
     // Start timer 
     countDown();
     // Reveal question panel
-    questionPanelEl.className = ""; 
+    questionPanelEl.className = "panel"; 
     generateQuestion();
 }
 
 // Create function that will transition to the next question once the quiz has begun 
 const nextQuestionHandler = function (event) {
     // If the element that is clicked in the list is a button representing an answer, and it is not the last question of the quiz, generate the next question 
-    if (event.target.matches(".answer") && quesNum != questions.length) {
+    if (event.target.matches(".btn") && quesNum != questions.length) {
         // Check to see if right answer was selected and score needs to be increased 
         checkAnswer();
         // Removes old answers 
@@ -117,7 +117,7 @@ const nextQuestionHandler = function (event) {
         generateQuestion();
     }
     // If the answer is clicked and it is the lat question, transition to the score submit
-    else if (event.target.matches(".answer") && quesNum === questions.length) {
+    else if (event.target.matches(".btn") && quesNum === questions.length) {
 
         // Check to see if right answer was selected and score needs to be increased 
          checkAnswer();
@@ -126,7 +126,7 @@ const nextQuestionHandler = function (event) {
         score = totalTime + score; 
         // Hide the question panel and reveal score submit panel 
         questionPanelEl.className = "hide";
-        scoreSubmitPanelEl.className = ""; 
+        scoreSubmitPanelEl.className = "panel"; 
    
         const finalScoreEl = document.querySelector("#final-score"); // ...getElementbyId doesn't work with span?
         finalScoreEl.textContent = `Your final score was: ${score}`
@@ -155,7 +155,7 @@ const highScoreHandler = function (event) {
         loadHighscores(); 
         scoreSubmitPanelEl.className = "hide";
         headerEl.className = "hide"; 
-        highscorePanelEl.className = "";
+        highscorePanelEl.className = "panel";
     }
 }
 
@@ -191,7 +191,7 @@ const scoreboardHandler = function () {
     welcomePanelEl.className = "hide";
     questionPanelEl.className = "hide";
     headerEl.className = "hide"; 
-    highscorePanelEl.className = ""; 
+    highscorePanelEl.className = "panel"; 
     // Call loadHighscores function 
     loadHighscores(); 
 
@@ -217,3 +217,4 @@ scoreboardEl.addEventListener("click", scoreboardHandler)
 
 // Call load highscores 
 loadHighscores();
+// Set timer based on set totalTime
