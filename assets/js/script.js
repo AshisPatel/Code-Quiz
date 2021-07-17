@@ -165,17 +165,21 @@ const highScoreHandler = function (event) {
 
 // Create a function to load previously saved highscores
 const loadHighscores = function() {
+    // Clear old list 
+    highscoreListEl.textContent = ""; 
     // Get highscores from localStorage
     let savedHighscores = localStorage.getItem("highscores");
     // Verify the highscores is not an empty array, if it is exit function else retrieve
     if (!savedHighscores) {
         return false; 
     }
-
     savedHighscores = JSON.parse(savedHighscores); 
     highscores = savedHighscores; // Updates our empty array to contain previous data
-    // sort highscores and then display as list 
-
+    // sort highscores from highest score to least 
+    highscores.sort((a,b) => {
+        return b.highscore - a.highscore; 
+    });
+    // Creates list of highscores from the stored object 
     for (let i = 0; i < savedHighscores.length; i++) {
         const highscoreListItemEl = document.createElement("li");
         highscoreListItemEl.textContent = `${savedHighscores[i].initials} - ${savedHighscores[i].highscore}`; 
@@ -197,9 +201,8 @@ returnButtonEl.addEventListener("click", function () {
 });
 // Clear highscores from list and localStorage on click 
 clearButtonEl.addEventListener("click", function () {
-    highscoreListEl = " ";  
+    highscoreListEl.textContent = "";  
     localStorage.clear();
-    
 });
 
 // Call load highscores 
