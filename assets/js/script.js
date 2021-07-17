@@ -28,13 +28,13 @@ let quesNum = 0;
 let score = 0;
 // Initailize empty array to hold highscores
 let highscores = []; 
-// Initialize object containing questions
+// Initialize object containing questions - questions & answers from the Week 4 Challenge Preview
 const questions = [{
-    title: "I made this blank :(", answers: ["Does this look fine?", "Or is it actually really bad...", "Do I stop being lazy and fix the justify?", "Meh"]
-    , correctAnswer: "Does this look fine?"
-}, { title: "Question 2", answers: ["e", "f", "g", "h"], correctAnswer: "f" },
-{ title: "Question 3", answers: ["i", "j", "k", "l"], correctAnswer: "l" },
-{ title: "Question 4", answers: ["m", "n", "o", "p"], correctAnswer: "o" }];
+    title: "Commonly used data types DO NOT include:", answers: ["strings", "booleans", "alerts", "numbers"]
+    , correctAnswer: "alerts"
+}, { title: "The condition in an if / else statement is enclosed with what?", answers: ["quotes", "curly brackets", "parenthesis", "square brackets"], correctAnswer: "parenthesis" },
+{ title: "Arrays in JavaScript can be used to store what?", answers: ["numbers and strings", "other arrays", "booleans", "all of the above"], correctAnswer: "all of the above" },
+{ title: "A very useful tool used during development and debugging for printing content to the debugger is:", answers: ["JavaScript", "terminal/bash", "for loops", "console.log"], correctAnswer: "console.log" }];
 
 // Create a function to generate the questions 
 const generateQuestion = function () {
@@ -55,7 +55,6 @@ const generateQuestion = function () {
 }
 
 // Create a function that will increase the score for correct answers and the timer
-
 const checkAnswer = function () {
     // If the user gets the question correct, add 10 points
     const answerFeedBackEl = document.querySelector("#feedback"); 
@@ -70,11 +69,12 @@ const checkAnswer = function () {
     }
     else {
         totalTime = 0; 
+        answerFeedBackEl.textContent = "Wrong! (`n`)";
     }
-
+    // Remove feedback text after 1 second
     const removeFeedbackText = setTimeout(function(){ 
         answerFeedBackEl.textContent = "";
-    }, 1000);
+    }, 500);
      
 }
 
@@ -124,7 +124,7 @@ const nextQuestionHandler = function (event) {
         answerListEl.textContent = "";
         generateQuestion();
     }
-    // If the answer is clicked and it is the lat question, transition to the score submit
+    // If the answer is clicked and it is the last question, transition to the score submit
     else if (event.target.matches(".btn") && quesNum === questions.length) {
 
         // Check to see if right answer was selected and score needs to be increased 
@@ -137,7 +137,7 @@ const nextQuestionHandler = function (event) {
         scoreSubmitPanelEl.className = "panel"; 
    
         const finalScoreEl = document.querySelector("#final-score"); // ...getElementbyId doesn't work with span?
-        finalScoreEl.textContent = `Your final score was: ${score}`
+        finalScoreEl.textContent = `Your final score was: ${score}`;
         // Add user's initials and score to an object to store in the localStorage
     }
 }
