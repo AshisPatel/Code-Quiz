@@ -10,6 +10,8 @@ const clearButtonEl = document.querySelector("#clear-btn");
 // Grab question-title and answer-list elements to populate with quiz questions & answers
 const questionTitleEl = document.querySelector("#question-title");
 const answerListEl = document.querySelector("#answer-list");
+// Grab highscore list to populate with highscores
+let highscoreListEl = document.querySelector("#highscore-list");
 // Grab div.list-wrap as the holder for the answers
 const timerEl = document.querySelector(".timer-box");
 // Grab span where final score is located
@@ -22,6 +24,8 @@ let totalTime = 60;
 let quesNum = 0;
 // Initialize score counter
 let score = 0;
+// Initailize empty array to hold highscores
+let highscores = []; 
 // Initialize object containing questions
 const questions = [{
     title: "Question 1", answers: ["a", "b", "c", "d"]
@@ -43,7 +47,6 @@ const generateQuestion = function () {
         answerEl.textContent = questions[quesNum].answers[i];
         answerHolderEl.appendChild(answerEl);
         answerListEl.appendChild(answerHolderEl);
-        //console.log(answerListEl); why does ths console log show me the same list each iteration? 
     }
     // Increment quesNum to move on to next question next time function is called 
     quesNum++;
@@ -55,7 +58,6 @@ const checkAnswer = function () {
     // If the user gets the question correct, add 10 points
     if (event.target.textContent === questions[quesNum - 1].correctAnswer) {
         score = score + 10;
-        console.log(score);
     }
     // If the user gets the question wrong, remove 10 seconds from the timer
     else if (totalTime > 10) {
@@ -105,8 +107,6 @@ const startQuizHandler = function () {
 // Create function that will transition to the next question once the quiz has begun 
 const nextQuestionHandler = function (event) {
     // If the element that is clicked in the list is a button representing an answer, and it is not the last question of the quiz, generate the next question 
-
-    console.log(event.target);
     if (event.target.matches(".answer") && quesNum != questions.length) {
         // Check to see if right answer was selected and score needs to be increased 
         checkAnswer();
@@ -136,14 +136,53 @@ const nextQuestionHandler = function (event) {
 const highScoreHandler = function (event) {
     // Prevent refresh on submit
     event.preventDefault();
-    // Hide score submit panel and reveal highscore panel
-    scoreSubmitPanelEl.className = "hide"; 
-    highscorePanelEl.className = ""; 
+    // Hide score submit panel and reveal highscore panel if the user gives their initials, if input text is blank, do not transition to highscore
+    var initial = document.querySelector("input[name='initials']").value 
+    if ( initial === "")
+    {
+        alert("Please enter your initials to submit your score!"); 
+    }
+    // If initials are input, store initial and score, hide score submit panel, show highscore panel
+    else {
+        // create object to hold initial and score, and then add to highscores array to store in localStorage 
+        let highscore = {initials: initial,
+             highscore: score};
+        highscores.push(highscore); 
+        localStorage.setItem("highscores", JSON.stringify(highscores)); 
+        // Panel transition
+        loadHighscores(); 
+        scoreSubmitPanelEl.className = "hide"; 
+        highscorePanelEl.className = "";
+
+    }
+    
     // Display hiscore list from localStorage
 
     // Display two buttons to allow the user to refresh the page or clear the hiscores
 
     // Refresh button
+}
+
+// Create a function to load previously saved highscores
+const loadHighscores = function() {
+    // Get highscores from localStorage
+    let savedHighscores = localStorage.getItem("highscores");
+    // Verify the highscores is not an empty array, if it is exit function else retrieve
+    if (!savedHighscores) {
+        return false; 
+    }
+
+    savedHighscores = JSON.parse(savedHighscores); 
+    highscores = savedHighscores; // Updates our empty array to contain previous data
+    // sort highscores and then display as list 
+
+    for (let i = 0; i < savedHighscores.length; i++) {
+        const highscoreListItemEl = document.createElement("li");
+        highscoreListItemEl.textContent = `${savedHighscores[i].initials} - ${savedHighscores[i].highscore}`; 
+        highscoreListEl.appendChild(highscoreListItemEl); 
+    }
+
+
 }
 
 // Start quiz on button click 
@@ -156,7 +195,12 @@ scoreSubmitPanelEl.addEventListener("submit", highScoreHandler);
 returnButtonEl.addEventListener("click", function () {
     window.location.reload(); 
 });
-// Look for clear highscore button click
+// Clear highscores from list and localStorage on click 
 clearButtonEl.addEventListener("click", function () {
-    localStorage.clear(); 
+    highscoreListEl = " ";  
+    localStorage.clear();
+    
 });
+
+// Call load highscores 
+loadHighscores();
