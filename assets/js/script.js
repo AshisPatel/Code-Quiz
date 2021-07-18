@@ -65,16 +65,21 @@ const checkAnswer = function () {
     // If the user gets the question wrong, remove 10 seconds from the timer
     else if (totalTime > 10) {
         totalTime = totalTime - 10;  
+        timerEl.textContent = `Time Left: ${totalTime}`;
         answerFeedBackEl.textContent = "Wrong! (`n`)";
     }
+    // If the user gets the question wrong, and there are less than 10 seconds remaining from the timer end quiz 
     else {
-        totalTime = 0; 
+        totalTime = 0;
+        timerEl.textContent = `Time Left: ${totalTime}`;
+        questionPanelEl.className = "hide";
+        scoreSubmitPanelEl.className = "panel"; 
         answerFeedBackEl.textContent = "Wrong! (`n`)";
     }
-    // Remove feedback text after 1 second
+    // Remove feedback text after 0.5 seconds
     const removeFeedbackText = setTimeout(function(){ 
         answerFeedBackEl.textContent = "";
-    }, 500);
+    }, 750);
      
 }
 
@@ -227,4 +232,6 @@ scoreboardEl.addEventListener("click", scoreboardHandler)
 
 // Call load highscores 
 loadHighscores();
-// Set timer based on set totalTime
+
+// Set timer based on set totalTime on page load 
+timerEl.textContent = `Time Left: ${totalTime}`; 
