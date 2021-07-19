@@ -30,4 +30,4 @@ Thank you for taking the time to check out my code quiz and README! In this week
 
 ![Dynamic and overly-exaggerated animated punch](https://github.com/AshisPatel/Code-Quiz-Week-4-Challenge/blob/main/assets/images/dynamic-punch.gif)
 
-*An accurate representation of me vs myself whenever I made any pun*
+*An accurate representation of anyone having to deal with my bad puns*
