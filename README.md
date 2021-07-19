@@ -6,7 +6,7 @@
 
 The code quiz is a minute-long four question quiz! The purpose of the quiz is to demonstrate that a static HTML page can be made more animated through Jscript and the DOM. Truly, using Jscript can lead to quite the *dynamic* experience. Bad puns aside, the quiz is based on a timer and point-deduction or accumulation from answering the questions right or wrong. The participant starts off with a total of 60 points (seconds) and each wrong question removes 10 points (and seconds from the timer). However, answering a question right also nets the user an additional 10 points. Due to a lack of question & answer randomization one may be able to achieve a score of 99! 
 
-# Function 
+## Function 
 
 Functionally, the quiz page works by having four static HTML sections that are either made visible or hidden. The visibility relies on swapping classes in the script using specific event listeners and handlers. The remainder of the quiz's functions are also performed using Jscript, such as storing and sorting the highscores, determining correct & wrong answers, and so on. 
 
