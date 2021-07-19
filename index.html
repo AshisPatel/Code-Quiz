@@ -17,6 +17,7 @@
 
     <!--Main Content section will host the welcome screen, quiz, and scoreboard-->
     <main class = "page-content">
+        <!-- Welcome panel hosts the start screen -->
         <section id = "welcome-panel" class = "panel">
             <h1>Code Quiz</h1>
                 <p>
@@ -26,12 +27,12 @@
                 </p>
             <button id="start-btn" class = "btn">Start</button>
         </section>
-
+        <!-- Question panel shows each question in the quiz -->
         <section id = "question-panel" class = "hide">
             <h1 id = "question-title"></h1>
             <ol id = "answer-list"></ol>
         </section>
-
+        <!-- Score submission panel when quiz is done, or time runs out-->
         <section id = "score-submit-panel" class = "hide">
             <div class = "completion-text"> 
                 <h1>The Quiz is Over!</h1>
@@ -44,7 +45,7 @@
                 <button type = "submit" id="submit-initials-btn" class = "btn">Submit</button>
             </form>
         </section>
-
+        <!-- Highscore panel when either view highscores is clicked or score is submitted -->
         <section id = "highscore-panel" class = "hide">
             <h1>Hiscores:</h1>
             <ol id = "highscore-list"></ol>

@@ -14,9 +14,9 @@ const questionTitleEl = document.querySelector("#question-title");
 const answerListEl = document.querySelector("#answer-list");
 // Grab highscore list to populate with highscores
 const highscoreListEl = document.querySelector("#highscore-list");
-// Grab div.list-wrap as the holder for the answers
+// Grab timer div
 const timerEl = document.querySelector("#timer-box");
-// Grab span where final score is located
+
 
 // Initialize boolean to check if the timer needs to continue counting down 
 let timerContinue = true;
@@ -40,7 +40,9 @@ const questions = [{
 const generateQuestion = function () {
     // Set question-title 
     questionTitleEl.textContent = questions[quesNum].title;
+    // Grab the answers key in the questions array of objects
     let questionAnswers = questions[quesNum].answers;
+    // For each used to run through answers array and generate buttons for each answer
     questionAnswers.forEach(questionAnswer => {
         const answerEl = document.createElement("button");
         const answerHolderEl = document.createElement("li");
@@ -76,7 +78,7 @@ const checkAnswer = function () {
         scoreSubmitPanelEl.className = "panel"; 
         answerFeedBackEl.textContent = "Wrong! (`n`)";
     }
-    // Remove feedback text after 0.5 seconds
+    // Remove feedback text after 0.75 seconds
     const removeFeedbackText = setTimeout(function(){ 
         answerFeedBackEl.textContent = "";
     }, 750);
@@ -111,7 +113,6 @@ const countDown = function () {
 const startQuizHandler = function () {
     // Hide the welcome panel 
     welcomePanelEl.className = "hide";
-    questNum = 0;    
     // Start timer 
     countDown();
     // Reveal question panel
@@ -202,7 +203,7 @@ const loadHighscores = function() {
 const scoreboardHandler = function () {
     // End timer if the the button was clicked mid quiz
     timerContinue = false; 
-    // Hide both welcome panel and question panel and reveal highscore panel
+    // Hide both welcome, question, and header panel and reveal highscore panel
     welcomePanelEl.className = "hide";
     questionPanelEl.className = "hide";
     headerEl.className = "hide"; 
