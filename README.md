@@ -1,4 +1,4 @@
-# Code Quiz - Week 4 Challenge
+# Code Quiz
 
 ## Purpose 
 
@@ -20,7 +20,7 @@ Functionally, the quiz page works by having four static HTML sections that are e
 
 ## Website
 
-https://ashispatel.github.io/Code-Quiz-Week-4-Challenge/
+https://ashispatel.github.io/Code-Quiz/
 
 ## End Note - A Thank You to the Reader 
 
